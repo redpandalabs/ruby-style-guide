@@ -1105,23 +1105,25 @@ condition](#safe-assignment-in-condition).
   'test'.upcase
   ```
 
-* <a name="single-line-blocks"></a>
-  Prefer `{...}` over `do...end` for single-line blocks.  Avoid using `{...}`
-  for multi-line blocks (multiline chaining is always ugly). Always use
+* <a name="semantic-blocks"></a>
+  Use `{...}` for blocks where the primary purpose of the block is to return a value, use `do...end` for blocks where the primary purpose of the block is to execute side effects. Always use
   `do...end` for "control flow" and "method definitions" (e.g. in Rakefiles and
   certain DSLs).  Avoid `do...end` when chaining.
-<sup>[[link](#single-line-blocks)]</sup>
+<sup>[[link](#semantic-blocks)]</sup>
 
   ```Ruby
   names = ['Bozhidar', 'Steve', 'Sarah']
 
   # bad
+  names.each { |name| puts name }
+
+  # good
   names.each do |name|
     puts name
   end
 
-  # good
-  names.each { |name| puts name }
+  # OK
+  names.each do |name| puts name end
 
   # bad
   names.select do |name|
@@ -1134,7 +1136,7 @@ condition](#safe-assignment-in-condition).
 
   Some will argue that multiline chaining would look OK with the use of {...},
   but they should ask themselves - is this code really readable and can the
-  blocks' contents be extracted into nifty methods?
+  blocks' contents be extracted into nifty methods? See also: [The Procedure/Function Block Convention in Ruby](http://devblog.avdi.org/2011/07/26/the-procedurefunction-block-convention-in-ruby/).
 
 * <a name="block-argument"></a>
   Consider using explicit block argument to avoid writing block literal that
